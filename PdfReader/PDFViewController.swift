@@ -19,15 +19,15 @@ enum MenuState{
 
 
 public enum ActionStyle {
-/// Brings up a print modal allowing user to print current PDF
+    /// Brings up a print modal allowing user to print current PDF
     case print
-       
-/// Brings up an activity sheet to share or open PDF in another app
+    
+    /// Brings up an activity sheet to share or open PDF in another app
     case activitySheet
 }
 
 class PDFViewController: UIViewController,MFMessageComposeViewControllerDelegate {
-
+    
     @IBOutlet var pdfView: PDFView!
     
     private var actionStyle = ActionStyle.activitySheet
@@ -44,54 +44,56 @@ class PDFViewController: UIViewController,MFMessageComposeViewControllerDelegate
         
         setupUI()
     }
-
+    
     //MARK: Setup UI
     private func setupUI() {
         CustomPDFView.pdfView = pdfView
-            
-         if showAsSingleFile {
-         if let doc = document("1") {
-         for i in 2..<21 {
-             doc.addPages(from: document(String(i))!)
-             }
-             CustomPDFView.pdfDocument = doc
-         }
-         } else {
-             CustomPDFView.pdfDocument = document(fileName)
-         }
-         
-         //MARK: Change single and double page according to orientation
-         if  UIDevice.current.orientation != UIDeviceOrientation.portrait { CustomPDFView.coverPage = true
-         } else {
-                        CustomPDFView.showBreaks = false
-         }
-         
-         for direction in [UISwipeGestureRecognizer.Direction.up, .down, .left, .right] {
-             let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
-             swipeGesture.direction = direction
-             pdfView.addGestureRecognizer(swipeGesture)
-         }
         
-         actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionButtonPressed))
-         self.navigationItem.rightBarButtonItem = actionButton
-         
-         let mailItem = UIMenuItem(title: "Mail", action: #selector(mail))
-         let messageItem = UIMenuItem(title: "Message",action: #selector(message))
-         let highLightItem = UIMenuItem(title: "HighLight",action: #selector(highLight))
-         UIMenuController.shared.menuItems = [mailItem,messageItem,highLightItem]
+        if showAsSingleFile {
+            if let doc = document("1") {
+                for i in 2..<21 {
+                    if let addDocument = document(String(i)) {
+                        doc.addPages(from: addDocument)
+                    }
+                }
+                CustomPDFView.pdfDocument = doc
+            }
+        } else {
+            CustomPDFView.pdfDocument = document(fileName)
+        }
+        
+        //MARK: Change single and double page according to orientation
+        if  UIDevice.current.orientation != UIDeviceOrientation.portrait { CustomPDFView.coverPage = true
+        } else {
+            CustomPDFView.showBreaks = false
+        }
+        
+        for direction in [UISwipeGestureRecognizer.Direction.up, .down, .left, .right] {
+            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+            swipeGesture.direction = direction
+            pdfView.addGestureRecognizer(swipeGesture)
+        }
+        
+        actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionButtonPressed))
+        self.navigationItem.rightBarButtonItem = actionButton
+        
+        let mailItem = UIMenuItem(title: "Mail", action: #selector(mail))
+        let messageItem = UIMenuItem(title: "Message",action: #selector(message))
+        let highLightItem = UIMenuItem(title: "HighLight",action: #selector(highLight))
+        UIMenuController.shared.menuItems = [mailItem,messageItem,highLightItem]
     }
     
     //MARK: Change single and double page according to orientation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-           super.viewWillTransition(to: size, with: coordinator)
-           if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft || UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft || UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
             CustomPDFView.showBreaks = true
             CustomPDFView.coverPage = false
-           } else {
+        } else {
             CustomPDFView.coverPage = true
             CustomPDFView.showBreaks = false
-           }
-       }
+        }
+    }
     
     //MARK: Go to next or previous page based on swipe direction
     @objc func swipe(_ sender: UISwipeGestureRecognizer) {
@@ -101,7 +103,7 @@ class PDFViewController: UIViewController,MFMessageComposeViewControllerDelegate
             CustomPDFView.goToPreviousPage()
         }
     }
-
+    
     //MARK: Getting pdf document from app storage
     private func document(_ name: String) -> PDFDocument? {
         guard let documentURL = Bundle.main.url(forResource: name, withExtension: "pdf") else { return nil }
@@ -112,11 +114,11 @@ class PDFViewController: UIViewController,MFMessageComposeViewControllerDelegate
     override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool
     {
         if action == #selector(mail(_:)) || action == #selector(message(_:)) || action == #selector(highLight(_:)){
-          return true
+            return true
         }
         return false
     }
-
+    
     @objc func mail(_ sender: Any?) {
         sendMail()
     }
@@ -148,9 +150,9 @@ class PDFViewController: UIViewController,MFMessageComposeViewControllerDelegate
     }
     
     func onTapHighLight() {
-       guard let selections = pdfView.currentSelection?.selectionsByLine()
+        guard let selections = pdfView.currentSelection?.selectionsByLine()
             else { return }
-
+        
         selections.forEach({ selection in
             selection.pages.forEach({ page in
                 let highlight = PDFAnnotation(bounds: selection.bounds(for: page), forType: .highlight, withProperties: nil)
@@ -207,20 +209,20 @@ extension PDFViewController: MFMailComposeViewControllerDelegate {
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
 extension PDFDocument {
-
+    
     func addPages(from document: PDFDocument) {
         let pageCountAddition = document.pageCount
-
+        
         for pageIndex in 0..<pageCountAddition {
             guard let addPage = document.page(at: pageIndex) else {
                 break
             }
-
+            
             self.insert(addPage, at: self.pageCount)
         }
     }

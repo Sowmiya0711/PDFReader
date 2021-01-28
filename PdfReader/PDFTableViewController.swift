@@ -41,5 +41,5 @@ class PDFTableViewController: UIViewController, UITableViewDelegate,UITableViewD
         pdfViewController.showAsSingleFile = false
         self.navigationController?.pushViewController(pdfViewController,animated: true)
     }
-
+    
 }

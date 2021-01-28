@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 enum Storyboard: String {
-case main = "Main"
+    case main = "Main"
 }
 
 extension UIViewController {
     
     class func instantiate<T: UIViewController>(appStoryboard: Storyboard) -> T {
-       
+        
         let storyboard = UIStoryboard(name: appStoryboard.rawValue, bundle: nil)
         let identifier = String(describing: self)
         return storyboard.instantiateViewController(withIdentifier: identifier) as! T

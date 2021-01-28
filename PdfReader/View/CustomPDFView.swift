@@ -14,16 +14,16 @@ class CustomPDFView
     static var pdfView: PDFView? = nil
     
     static var pdfDocument: PDFDocument? = nil {
-           didSet {
-               pdfView?.document = pdfDocument
-               fit()
-           }
-       }
+        didSet {
+            pdfView?.document = pdfDocument
+            fit()
+        }
+    }
     
     static var showBreaks: Bool = false {
         didSet { fit() }
     }
-   
+    
     static var scrolling: Bool = true {
         didSet { fit() }
     }
@@ -44,8 +44,8 @@ class CustomPDFView
             page = pages
         }
         
-       pdfView?.displaysAsBook = coverPage
-       pdfView?.displaysPageBreaks = showBreaks
+        pdfView?.displaysAsBook = coverPage
+        pdfView?.displaysPageBreaks = showBreaks
         pdfView?.enableDataDetectors = true
         pdfView?.displayMode = showBreaks ? .twoUp : .singlePageContinuous
         pdfView?.displayDirection = scrolling ? .vertical : .horizontal
