@@ -41,7 +41,6 @@ class CustomPDFView
         if pages == nil  {
             page = nil
         } else {
-            print("Pages \(pages) index \(index)")
             page = pages
         }
         
@@ -55,7 +54,6 @@ class CustomPDFView
         if showBreaks{
             pdfView?.scaleFactor = 0.47
         }
-        print("Page \(page)")
         if let page = page { pdfView?.go(to: page) }
     }
     

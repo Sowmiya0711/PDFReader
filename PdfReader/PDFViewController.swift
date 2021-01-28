@@ -32,39 +32,55 @@ class PDFViewController: UIViewController,MFMessageComposeViewControllerDelegate
     
     private var actionStyle = ActionStyle.activitySheet
     private var actionButton: UIBarButtonItem?
+    var showAsSingleFile = false
+    var fileName = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "PDF READER"
+        let backButton = UIBarButtonItem()
+        backButton.title = "Back"
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
-        CustomPDFView.pdfView = pdfView
-            
-        if let doc = document("1") {
-        for i in 2..<21 {
-            doc.addPages(from: document(String(i))!)
-            }
-           
-            CustomPDFView.pdfDocument = doc
-            if  UIDevice.current.orientation != UIDeviceOrientation.portrait { CustomPDFView.coverPage = true
-            } else {
-                CustomPDFView.showBreaks = false
-            }
-        }
-        
-        for direction in [UISwipeGestureRecognizer.Direction.up, .down, .left, .right] {
-            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
-            swipeGesture.direction = direction
-            pdfView.addGestureRecognizer(swipeGesture)
-        }
-       
-        actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionButtonPressed))
-        self.navigationItem.rightBarButtonItem = actionButton
-        
-        let mailItem = UIMenuItem(title: "Mail", action: #selector(mail))
-        let messageItem = UIMenuItem(title: "Message",action: #selector(message))
-        let highLightItem = UIMenuItem(title: "HighLight",action: #selector(highLight))
-        UIMenuController.shared.menuItems = [mailItem,messageItem,highLightItem]
+        setupUI()
     }
 
+    //MARK: Setup UI
+    private func setupUI() {
+        CustomPDFView.pdfView = pdfView
+            
+         if showAsSingleFile {
+         if let doc = document("1") {
+         for i in 2..<21 {
+             doc.addPages(from: document(String(i))!)
+             }
+             CustomPDFView.pdfDocument = doc
+         }
+         } else {
+             CustomPDFView.pdfDocument = document(fileName)
+         }
+         
+         //MARK: Change single and double page according to orientation
+         if  UIDevice.current.orientation != UIDeviceOrientation.portrait { CustomPDFView.coverPage = true
+         } else {
+                        CustomPDFView.showBreaks = false
+         }
+         
+         for direction in [UISwipeGestureRecognizer.Direction.up, .down, .left, .right] {
+             let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+             swipeGesture.direction = direction
+             pdfView.addGestureRecognizer(swipeGesture)
+         }
+        
+         actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionButtonPressed))
+         self.navigationItem.rightBarButtonItem = actionButton
+         
+         let mailItem = UIMenuItem(title: "Mail", action: #selector(mail))
+         let messageItem = UIMenuItem(title: "Message",action: #selector(message))
+         let highLightItem = UIMenuItem(title: "HighLight",action: #selector(highLight))
+         UIMenuController.shared.menuItems = [mailItem,messageItem,highLightItem]
+    }
+    
     //MARK: Change single and double page according to orientation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
@@ -183,7 +199,6 @@ extension PDFViewController: MFMailComposeViewControllerDelegate {
     private func configureMailComposer() -> MFMailComposeViewController{
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = self
-        mailComposeVC.setToRecipients(["Frost@gmail.com"])
         mailComposeVC.setSubject("PDF Text Selection")
         if let selectedString = pdfView.currentSelection?.string {
             mailComposeVC.setMessageBody(selectedString, isHTML: false)

@@ -34,6 +34,9 @@
 		084A4A0425C1C041005BE7FC /* 3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 084A49F125C1C041005BE7FC /* 3.pdf */; };
 		084A4A0525C1C041005BE7FC /* 13.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 084A49F225C1C041005BE7FC /* 13.pdf */; };
 		084A4A0625C1C041005BE7FC /* 6.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 084A49F325C1C041005BE7FC /* 6.pdf */; };
+		08A3A99425C2E5DC002DC372 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3A99325C2E5DC002DC372 /* HomeViewController.swift */; };
+		08A3A99725C2E72A002DC372 /* UIViewControlleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3A99625C2E72A002DC372 /* UIViewControlleExtension.swift */; };
+		08A3A99925C2E790002DC372 /* PDFTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3A99825C2E790002DC372 /* PDFTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +69,9 @@
 		084A49F125C1C041005BE7FC /* 3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 3.pdf; sourceTree = "<group>"; };
 		084A49F225C1C041005BE7FC /* 13.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 13.pdf; sourceTree = "<group>"; };
 		084A49F325C1C041005BE7FC /* 6.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 6.pdf; sourceTree = "<group>"; };
+		08A3A99325C2E5DC002DC372 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		08A3A99625C2E72A002DC372 /* UIViewControlleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControlleExtension.swift; sourceTree = "<group>"; };
+		08A3A99825C2E790002DC372 /* PDFTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,7 @@
 		083A714F25C14D8C0058960B /* PdfReader */ = {
 			isa = PBXGroup;
 			children = (
+				08A3A99525C2E6F6002DC372 /* Utilty */,
 				084A49DB25C1BD1C005BE7FC /* Assets */,
 				084A49D825C1BA62005BE7FC /* View */,
 				083A715025C14D8C0058960B /* AppDelegate.swift */,
@@ -107,6 +114,8 @@
 				083A715925C14D8D0058960B /* Assets.xcassets */,
 				083A715B25C14D8D0058960B /* LaunchScreen.storyboard */,
 				083A715E25C14D8D0058960B /* Info.plist */,
+				08A3A99325C2E5DC002DC372 /* HomeViewController.swift */,
+				08A3A99825C2E790002DC372 /* PDFTableViewController.swift */,
 			);
 			path = PdfReader;
 			sourceTree = "<group>";
@@ -152,6 +161,14 @@
 				084A49DD25C1BD45005BE7FC /* 1.pdf */,
 			);
 			path = PDF;
+			sourceTree = "<group>";
+		};
+		08A3A99525C2E6F6002DC372 /* Utilty */ = {
+			isa = PBXGroup;
+			children = (
+				08A3A99625C2E72A002DC372 /* UIViewControlleExtension.swift */,
+			);
+			path = Utilty;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,10 +262,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08A3A99425C2E5DC002DC372 /* HomeViewController.swift in Sources */,
 				083A715525C14D8C0058960B /* PDFViewController.swift in Sources */,
 				083A715125C14D8C0058960B /* AppDelegate.swift in Sources */,
 				084A49DA25C1BA84005BE7FC /* CustomPDFView.swift in Sources */,
+				08A3A99925C2E790002DC372 /* PDFTableViewController.swift in Sources */,
 				083A715325C14D8C0058960B /* SceneDelegate.swift in Sources */,
+				08A3A99725C2E72A002DC372 /* UIViewControlleExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
