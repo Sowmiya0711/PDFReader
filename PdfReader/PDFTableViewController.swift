@@ -16,7 +16,7 @@ class PDFTableViewController: UIViewController, UITableViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Register the table view cell class and its reuse id
+        //MARK: Register the table view cell class and its reuse id
         pdfTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         navigationItem.title = "PDF READER"
         let backButton = UIBarButtonItem()
